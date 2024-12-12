@@ -1,6 +1,6 @@
-# useQueryMunismank
+# useQueryMunisma
 
-`useQueryMunismank` es un paquete diseñado para facilitar la gestión de estados relacionados con consultas asíncronas en aplicaciones React. Este hook permite manejar datos, adaptadores y notificaciones de manera declarativa y escalable.
+`useQueryMunisma` es un paquete diseñado para facilitar la gestión de estados relacionados con consultas asíncronas en aplicaciones React. Este hook permite manejar datos, adaptadores y notificaciones de manera declarativa y escalable.
 
 ## Características principales
 
@@ -15,13 +15,13 @@
 Instala el paquete desde npm:
 
 ```bash
-npm install usequerymunismank
+npm install usequerymunisma
 ```
 
 O directamente desde el repositorio de GitHub:
 
 ```bash
-npm install pmNiko/useQueryMunismank
+npm install pmNiko/usequerymunisma
 ```
 
 ## Uso básico
@@ -29,7 +29,7 @@ npm install pmNiko/useQueryMunismank
 ### Ejemplo sin adaptador
 
 ```tsx
-import { useQueryState } from 'usequerymunismank';
+import { useQueryState } from 'usequerymunisma';
 
 const ExampleComponent = () => {
   const {
@@ -54,7 +54,7 @@ const ExampleComponent = () => {
 ### Ejemplo con adaptador
 
 ```tsx
-import { useQueryState } from 'usequerymunismank';
+import { useQueryState } from 'usequerymunisma';
 
 const adaptData = data => data.map(item => ({ ...item, isActive: true }));
 
@@ -147,4 +147,4 @@ Métodos disponibles para interactuar con la consulta:
 
 Este proyecto está licenciado bajo la [MIT License](./LICENSE).
 
-Para más información, visita el [repositorio oficial](https://github.com/pmNiko/useQueryMunisma).
+Para más información, visita el [repositorio oficial](https://github.com/pmNiko/usequerymunisma).
