@@ -1,0 +1,81 @@
+{
+  "name": "usequerymunisma",
+  "description": "Gestor de estado para peticiones asíncronas",
+  "version": "0.2.0",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/pmNiko/useQueryMunisma.git"
+  },
+  "license": "MIT",
+  "main": "dist/index.js",
+  "typings": "dist/index.d.ts",
+  "files": [
+    "dist",
+    "README.md",
+    "LICENSE"
+  ],
+  "keywords": [
+    "react",
+    "state-manager",
+    "async",
+    "requests",
+    "typescript"
+  ],
+  "engines": {
+    "node": ">=10"
+  },
+  "scripts": {
+    "start": "tsdx watch",
+    "build": "tsdx build",
+    "test": "tsdx test --passWithNoTests",
+    "lint": "tsdx lint",
+    "prepare": "tsdx build",
+    "size": "size-limit",
+    "analyze": "size-limit --why"
+  },
+  "peerDependencies": {
+    "crypto-js": "^4.2.0",
+    "react": ">=16"
+  },
+  "husky": {
+    "hooks": {
+      "pre-commit": "tsdx lint"
+    }
+  },
+  "prettier": {
+    "printWidth": 80,
+    "semi": true,
+    "singleQuote": true,
+    "trailingComma": "es5"
+  },
+  "author": "nikoDev",
+  "module": "dist/usequerymunisma.esm.js",
+  "size-limit": [
+    {
+      "path": "dist/usequerymunisma.cjs.production.min.js",
+      "limit": "10 KB"
+    },
+    {
+      "path": "dist/usequerymunisma.esm.js",
+      "limit": "10 KB"
+    }
+  ],
+  "devDependencies": {
+    "@size-limit/preset-small-lib": "^11.1.1",
+    "@types/crypto-js": "^4.2.2",
+    "@types/node": "^22.5.1",
+    "@types/react": "^18.2.67",
+    "@types/react-dom": "^18.2.22",
+    "husky": "^9.0.11",
+    "react": "^18.2.0",
+    "react-dom": "^18.2.0",
+    "size-limit": "^11.1.1",
+    "tsdx": "^0.14.1",
+    "tslib": "^2.6.2",
+    "typescript": "^5.4.2"
+  },
+  "dependencies": {
+    "crypto-js": "^4.2.0",
+    "jsencrypt": "^3.3.2"
+  }
+}
