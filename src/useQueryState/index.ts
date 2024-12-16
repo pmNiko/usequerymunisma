@@ -106,9 +106,13 @@ export const useQueryState = <T, G = any, A = any>(
         throw new Error('Faltan los parámetros iniciales de configuración');
       setIsLoading(true);
 
+      await sleep(options?.fetchDelay);
+
       if (options.name)
         console.log(`Se llamó desde el servicio: ${options.name}`);
+
       clearData();
+
       query.request();
 
       let response: DTOsysGetData<T>;
@@ -120,8 +124,6 @@ export const useQueryState = <T, G = any, A = any>(
       } else {
         response = await querySysgetdata.post();
       }
-
-      await sleep(options?.fetchDelay);
 
       if (options.showResponse) console.log('Response_DTO: ', response);
 

@@ -88,6 +88,44 @@ const ExampleWithAdapter = () => {
 };
 ```
 
+### Ejemplo Mock
+
+```tsx
+interface FakeDataReponse {
+  name: string;
+  dni: number;
+  age: number;
+}
+
+const FN_Example = 'fnexample';
+
+const mockResponse = {
+  estado: 1,
+  mensaje: null,
+  rowcount: 1,
+  datos: {
+    name: 'Carlos',
+    dni: 11222333,
+    age: 40,
+  },
+};
+
+const App = () => {
+  const { data, isFetching } = useQueryState<FakeDataReponse>(FN_Example, {
+    auto: true,
+    fetchDelay: 2000,
+    mode: 'mock',
+    mockResponse,
+  });
+
+  return (
+    <div>
+      {isFetching ? <span>Cargando</span> : <pre>{JSON.stringify(data)}</pre>}
+    </div>
+  );
+};
+```
+
 ## API del hook
 
 ### Parámetros principales
