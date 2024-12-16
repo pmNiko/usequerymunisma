@@ -1,6 +1,11 @@
-# useQueryMunisma
+<h1 align="center">useQueryMunisma</h1>
 
-`useQueryMunisma` es un paquete diseñado para facilitar la gestión de estados relacionados con consultas asíncronas en aplicaciones React. Este hook permite manejar datos, adaptadores y notificaciones de manera declarativa y escalable.
+<p align="center" width="300">
+   <img align="center" width="200" src="https://i.ibb.co/V3tMCZn/municipio.png" />
+</p>
+<br/><br/>
+
+- Es un paquete diseñado para facilitar la gestión de estados relacionados con consultas asíncronas en aplicaciones React. Este hook permite manejar datos, adaptadores y notificaciones de manera declarativa y escalable.
 
 ## Características principales
 
@@ -88,7 +93,7 @@ const ExampleWithAdapter = () => {
 ### Parámetros principales
 
 - `fn` (string, requerido): Nombre de la función o endpoint a consultar.
-- `init` (opcional): Objeto de configuración con las siguientes propiedades:
+- `options` (opcional): Objeto de configuración con las siguientes propiedades:
   - **`name`**: Identificador del servicio para depuración.
   - **`auto`**: Ejecuta la consulta automáticamente al montar el componente (por defecto `false`).
   - **`singleObject`**: Determina si los datos devueltos serán un objeto único o un arreglo (por defecto `false`).
