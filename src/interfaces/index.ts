@@ -1,4 +1,4 @@
-export enum CodeEstateResponse {
+export enum CodeStateResponse {
   ERROR,
   OK,
   INFO,
@@ -14,7 +14,7 @@ export enum CodeEstateResponse {
  */
 export interface DTOsysGetData<T> {
   rowcount: number;
-  estado: CodeEstateResponse;
+  estado: CodeStateResponse;
   mensaje: string | null;
   datos: T;
 }
