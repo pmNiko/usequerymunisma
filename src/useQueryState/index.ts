@@ -86,14 +86,14 @@ import { isNotEmpty, sleep } from './utils';
  */
 export const useQueryState = <T, G = any, A = any>(
   fn: string,
-  init?: ExtraOptions<G, A, T>
+  options?: ExtraOptions<G, A, T>
 ) => {
   const [params, setParams] = useState<G>({} as G);
   const [isLoading, setIsLoading] = useState(false);
   const querySysgetdata = useQueriesSysgetdata<T, G>({
     fn,
     parametros: params,
-    mode: init?.mode,
+    mode: options?.mode,
   });
   const notify = useNotify();
   const adapter = useAdapter<A>();
@@ -102,50 +102,55 @@ export const useQueryState = <T, G = any, A = any>(
   // ** ---- Handler de estado de la petición asincrona ---- ** //
   const request = async () => {
     try {
+      if (!options)
+        throw new Error('Faltan los parámetros iniciales de configuración');
       setIsLoading(true);
-      !!init?.name && console.log(`Se llamo desde el servicio: ${init?.name}`);
+
+      if (options.name)
+        console.log(`Se llamó desde el servicio: ${options.name}`);
       clearData();
       query.request();
 
       let response: DTOsysGetData<T>;
 
-      if (!!init?.mode && init.mode == 'mock') {
-        if (init.mockResponse == undefined)
+      if (options.mode === 'mock') {
+        if (!options.mockResponse)
           throw new Error('Falta asignar la propiedad "mockData"');
-
-        response = init.mockResponse;
+        response = options.mockResponse;
       } else {
         response = await querySysgetdata.post();
       }
 
-      await sleep(init?.fetchDelay);
+      await sleep(options?.fetchDelay);
 
-      !!init?.showResponse && console.log('Repomse_DTO: ', response);
+      if (options.showResponse) console.log('Response_DTO: ', response);
 
-      response.estado === INFO_CODE_STATUS && notify.info(response.mensaje!);
+      if (response.estado === INFO_CODE_STATUS) notify.info(response.mensaje!);
 
       if (response.rowcount > EMPTY) {
         const { datos } = response;
-        if (!!init?.singleObject) {
+        if (options.singleObject) {
           query.response((datos as any)[0]);
         } else {
           query.response(datos);
         }
 
-        if (!!init?.useAdapter) {
+        if (options.useAdapter && handlerAdapter) {
           await handlerAdapter(datos as any);
-          setIsLoading(false);
         }
-      } else {
-        setIsLoading(false);
       }
     } catch (error) {
-      console.error('Detalle del error del request: ', error);
-      notify.info();
+      if (error instanceof Error) {
+        console.error('Detalle del error del request: ', error.message);
+        notify.error(`Ocurrió un error durante la petición: ${error.message}`);
+      } else {
+        console.error('Error desconocido:', error);
+        notify.error('Ocurrió un error desconocido durante la petición.');
+      }
     } finally {
+      setIsLoading(false);
       query.completed();
-      !!init?.name && console.info(`Servicio: ${init?.name} finalizado!`);
-      !init?.useAdapter && setIsLoading(false);
+      if (options?.name) console.info(`Servicio: ${options.name} finalizado!`);
     }
   };
 
@@ -158,18 +163,18 @@ export const useQueryState = <T, G = any, A = any>(
 
   //?? Dispacher del request
   const hanlderRequest = () => {
-    !!init?.searchParams ? setParams(init?.searchParams!) : request();
+    !!options?.searchParams ? setParams(options?.searchParams!) : request();
   };
 
   //?? Manejador del adapter
   const handlerAdapter = async (response: T) => {
     return new Promise(async (resolve, __) => {
       adapter.initialize();
-      const result = (await init?.adapter!(response)) as A;
+      const result = (await options?.adapter!(response)) as A;
 
-      !!init?.showAdaptedResults &&
+      !!options?.showAdaptedResults &&
         console.log('Resultado del adapter: ', result);
-      await sleep(init?.adapterDelay);
+      await sleep(options?.adapterDelay);
 
       resolve(result);
     })
@@ -185,7 +190,7 @@ export const useQueryState = <T, G = any, A = any>(
 
   // ! Fetching reactivo en el montaje del componente
   useEffect(() => {
-    !!init?.auto && hanlderRequest();
+    !!options?.auto && hanlderRequest();
   }, []);
 
   // ! Request reactivo mediante el seteo de params
@@ -195,8 +200,8 @@ export const useQueryState = <T, G = any, A = any>(
 
   // ! Refetching reactivo mediante dependencia
   useEffect(() => {
-    !!init?.dependsOn && setParams(init?.searchParams!);
-  }, [init?.dependsOn]);
+    !!options?.dependsOn && setParams(options?.searchParams!);
+  }, [options?.dependsOn]);
 
   // ! Despacha la comprobación de response disponible
   useEffect(() => {
@@ -209,10 +214,10 @@ export const useQueryState = <T, G = any, A = any>(
    *    3. Se haya definido la propiedad afterRun
    */
   useEffect(() => {
-    if (query.state.isStarted && !isLoading && !!init?.runAfter) {
-      !!init.runAfter.debug &&
+    if (query.state.isStarted && !isLoading && !!options?.runAfter) {
+      !!options.runAfter.debug &&
         console.log('---- Ejecución de la acción final ----');
-      init.runAfter.execute();
+      options.runAfter.execute();
     }
   }, [isLoading]);
 
