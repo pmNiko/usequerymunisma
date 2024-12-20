@@ -18,12 +18,10 @@ export interface CheckAuthResponse<T> {
   payload: T;
 }
 
-const DEFAULT_API_URL = 'http://staging.smandes.gov.ar/api-commons/auth';
-const API_URL = process.env.REACT_APP_API_COMMONS
-  ? `${process.env.REACT_APP_API_COMMONS}/auth`
-  : DEFAULT_API_URL;
+const DOMAIN = process.env.REACT_APP_DOMAIN! ?? 'http://dev.smandes.gov.ar';
+const API_URL = DOMAIN + '/api/auth';
 
-const ApiCommons = {
+const ApiAuth = {
   LOGIN: `${API_URL}/login`,
   VERIFY: `${API_URL}/verify`,
 };
@@ -31,7 +29,7 @@ const ApiCommons = {
 // Función genérica para login
 const login = async <T = SessionUser>(payload: T): Promise<string> => {
   try {
-    const response = await fetch(ApiCommons.LOGIN, {
+    const response = await fetch(ApiAuth.LOGIN, {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
       body: JSON.stringify(payload),
@@ -56,7 +54,7 @@ const checkAuth = async <T = SessionUser>(
   token: string
 ): Promise<{ renewToken: string; payload: T }> => {
   try {
-    const response = await fetch(ApiCommons.VERIFY, {
+    const response = await fetch(ApiAuth.VERIFY, {
       method: 'POST',
       headers: {
         'Content-Type': 'application/json',

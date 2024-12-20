@@ -5,7 +5,7 @@ import { useBodyEncode } from './hooks/useBodyEncode';
 import { RequestHttp } from './interfaces';
 
 /**
- * Handler de peticiones asyncronas al back-end api-commons
+ * Handler de peticiones asyncronas al back-end api-appsmagob
  *  - Se conecta directamente con el endpoint de sysgetdata
  *  - Recibe una interface genérica T para poder inferir el
  *    tipo de respuesta en el DTO.
