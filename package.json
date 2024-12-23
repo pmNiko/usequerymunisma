@@ -1,10 +1,10 @@
 {
   "name": "usequerymunisma",
   "description": "Gestor de estado para peticiones asíncronas",
-  "version": "0.6.2",
+  "version": "0.6.3",
   "repository": {
     "type": "git",
-    "url": "https://github.com/pmNiko/usequerymunisma"
+    "url": "https://github.com/pmNiko/usequerymunisma.git"
   },
   "license": "MIT",
   "main": "dist/index.js",
